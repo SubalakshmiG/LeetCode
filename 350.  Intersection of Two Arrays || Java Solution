@@ -1,0 +1,79 @@
+Given two integer arrays nums1 and nums2, return an array of their intersection. Each element in the result must appear as many times as it shows in both arrays and you may return the result in any order.
+Example 1:
+Input: nums1 = [1,2,2,1], nums2 = [2,2]
+Output: [2,2]
+
+Example 2:
+Input: nums1 = [4,9,5], nums2 = [9,4,9,8,4]
+Output: [4,9]
+Explanation: [9,4] is also accepted.
+ 
+Constraints:
+1 <= nums1.length, nums2.length <= 1000
+0 <= nums1[i], nums2[i] <= 1000
+ 
+
+Follow up:
+What if the given array is already sorted? How would you optimize your algorithm?
+What if nums1's size is small compared to nums2's size? Which algorithm is better?
+What if elements of nums2 are stored on disk, and the memory is limited such that you cannot load all elements into the memory at once?
+
+Solution:
+
+Code:
+class Solution {
+    public int[] intersect(int[] nums1, int[] nums2) {
+        int[] temp = new int[Math.min(nums1.length, nums2.length)];
+        int k = 0;
+        
+        boolean[] visited = new boolean[nums2.length];
+        
+        for (int i = 0; i < nums1.length; i++) {
+            for (int j = 0; j < nums2.length; j++) {
+                if (nums1[i] == nums2[j] && !visited[j]) {
+                    temp[k++] = nums1[i];
+                    visited[j] = true;
+                    break;
+                }
+            }
+        }
+
+        int[] result = new int[k];
+        for (int i = 0; i < k; i++) {
+            result[i] = temp[i];
+        }
+
+        return result;
+    }
+        
+}
+
+Intuition:
+The problem requires finding common elements between two arrays. The first thought is to compare each element of the first array with every element of the second array to find matches. A direct comparison ensures that we capture all intersections without missing any, even if there are duplicates.
+
+Approach:
+Initialize Temporary and Visited Arrays:
+Create a temporary array 'temp' to store intersection elements, with a size equal to the smaller of the two input arrays.
+Create a boolean array 'visited' to track which elements of nums2 have already been matched.
+
+Nested Loop for Matching:
+Use a nested loop where the outer loop iterates over 'nums1' and the inner loop iterates over 'nums2'.
+For each element in 'nums1', check against all elements in 'nums2'.
+If a match is found and the element in 'nums2' has not been visited, add the element to 'temp' and mark it as visited.
+
+Copy to Result Array:
+After finding all matches, copy the valid elements from 'temp' to the result array.
+The result array's size should be equal to the number of matches found.
+
+Return Result:
+Return the result array containing the intersection elements.
+
+Complexity
+Time complexity:
+The time complexity is 𝑂(𝑛1×𝑛2), where 𝑛1 is the length of 'nums1' and 𝑛2 is the length of 'nums2'. This is because for each element in 'nums1', we potentially check all elements in 'nums2'.
+Space complexity:
+The temp array has a space complexity of 𝑂(min⁡(𝑛1,𝑛2)).
+The visited array has a space complexity of 𝑂(𝑛2).
+The result array also has a space complexity of 𝑂(min(𝑛1,𝑛2)).
+Combining these, the overall space complexity is 𝑂(min⁡(𝑛1,𝑛2)+𝑛2).
+
