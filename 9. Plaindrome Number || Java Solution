@@ -1,0 +1,68 @@
+Given an integer x, return true if x is a palindrome, and false otherwise.
+
+Example 1:
+Input: x = 121
+Output: true
+Explanation: 121 reads as 121 from left to right and from right to left.
+
+Example 2:
+Input: x = -121
+Output: false
+Explanation: From left to right, it reads -121. From right to left, it becomes 121-. Therefore it is not a palindrome.
+
+Example 3:
+Input: x = 10
+Output: false
+Explanation: Reads 01 from right to left. Therefore it is not a palindrome.
+ 
+
+Constraints:
+-231 <= x <= 231 - 1
+Follow up: Could you solve it without converting the integer to a string?
+
+Solution:
+
+Code
+class Solution {
+    public boolean isPalindrome(int x) {
+        int temp=x;
+        if (x < 0 || (x % 10 == 0 && x != 0)) {
+            return false;
+        }
+
+        int reversed = 0;
+        while (x>0) {
+            reversed = reversed * 10 + x % 10;
+            x /= 10; 
+        }
+        return temp == reversed ;
+    }
+}
+
+Intuition:
+The problem is to determine if an integer is a palindrome. A palindrome reads the same forwards and backwards. A straightforward way to check this is to reverse the integer and see if it matches the original integer. This involves converting the integer to its reversed form and comparing the two.
+
+Approach:
+1. Initial Checks:
+  If the integer is negative, it cannot be a palindrome.
+  If the integer ends with a zero (but isn't zero itself), it cannot be a palindrome since the first digit cannot be zero.
+
+2. Reverse the Integer:
+  Initialize a variable 'reversed' to store the reversed integer.
+  Use a loop to build the reversed integer:
+  Extract the last digit of 'x' and append it to 'reversed'.
+  Remove the last digit from 'x' by dividing it by 10.
+  Continue this process until 'x' becomes zero.
+
+3. Compare the Original and Reversed Integer:
+  Store the original value of 'x' in a temporary variable 'temp'.
+  After reversing, compare 'temp' with 'reversed'.
+  If they are equal, the integer is a palindrome; otherwise, it is not.
+
+Complexity:
+Time complexity:𝑂(log⁡10(𝑛))
+The loop runs for the number of digits in the integer. The number of digits in an integer 𝑛 is log10(𝑛), so the time complexity is 𝑂(log⁡10(𝑛)).
+
+Space complexity:𝑂(1)
+The solution uses a constant amount of extra space, regardless of the input size.
+
